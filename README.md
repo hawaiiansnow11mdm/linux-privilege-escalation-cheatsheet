@@ -138,8 +138,11 @@ searchsploit linux kernel
 
 
 
+This cheatsheet was created for learning and practice purposes during Linux privilege escalation exercises.    
+Feel free to fork, improve, and share it with the community.  
 
 
+Made by [hawaiiansnow11mdm](https://github.com/hawaiiansnow11mdm)
 
 
 
