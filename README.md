@@ -6,7 +6,7 @@ Each section includes examples and ready-to-use commands.
 General Info & Enumeration
 Always perform this first: identify running processes, open ports, users, and interesting files to find escalation opportunities.
 
-Essential commands:
+Essential commands:  
 whoami  
 id  
 hostname  
