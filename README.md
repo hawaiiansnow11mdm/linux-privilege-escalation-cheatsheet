@@ -27,7 +27,8 @@ sudo -l
 --------------------------------------------------------------------------------------
 
 # **SUDO**
-Allows executing commands with elevated privileges if permitted in the sudoers file.
+Allows executing commands with elevated privileges if permitted in the sudoers file.  
+
 sudo -l
 If a binary is listed, search it on GTFOBins.
 
@@ -58,7 +59,7 @@ Advanced technique using environment variables and sudo to run arbitrary code.
 Check if LD_PRELOAD is allowed:
 sudo -l
 
-Create this C code:
+Create this C code:  
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
